@@ -11,15 +11,19 @@ Công cụ tự động hóa việc thu thập, phân tích và đánh giá hi�
 
 ## 📋 Mục lục
 
-- [Tổng quan](#tổng-quan)
-- [Kiến trúc hệ thống](#kiến-trúc-hệ-thống)
-- [Yêu cầu hệ thống](#yêu-cầu-hệ-thống)
-- [Cài đặt](#cài-đặt)
-- [Cấu hình](#cấu-hình)
-- [Sử dụng](#sử-dụng)
-- [Pipeline xử lý](#pipeline-xử-lý)
-- [Cấu trúc thư mục](#cấu-trúc-thư-mục)
-- [Đầu ra](#đầu-ra)
+- [Tổng quan](#-tổng-quan)
+- [Kiến trúc hệ thống](#️-kiến-trúc-hệ-thống)
+- [Yêu cầu hệ thống](#-yêu-cầu-hệ-thống)
+- [Cài đặt](#-cài-đặt)
+- [Cấu hình](#️-cấu-hình)
+- [Sử dụng](#-sử-dụng)
+- [Pipeline xử lý](#-pipeline-xử-lý)
+- [Cấu trúc thư mục](#-cấu-trúc-thư-mục)
+- [Đầu ra](#-đầu-ra)
+- [Troubleshooting](#-troubleshooting)
+- [License](#-license)
+- [Tác giả](#-tác-giả)
+- [Dự án](#-dự-án)
 
 ## 🎯 Tổng quan
 
