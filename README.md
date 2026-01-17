@@ -89,15 +89,20 @@ SQL Reviewer là một công cụ pipeline 5 bước được thiết kế để
 - **Oracle Client**: Oracle Instant Client hoặc Oracle Database Client
 - **Glowroot**: Đang chạy và giám sát các ứng dụng Java
 
-### Thư viện Python
+### Thư viện Python chính
 
-```txt
-pyyaml          # Đọc file cấu hình YAML
-requests        # HTTP requests tới Glowroot API
-oracledb        # Kết nối Oracle Database
-sqlglot         # SQL Parser
-jinja2          # Template engine cho báo cáo HTML
-```
+| Thư viện | Phiên bản | Mô tả |
+|----------|-----------|-------|
+| `PyYAML` | 6.0.3 | Đọc file cấu hình YAML |
+| `requests` | 2.32.5 | HTTP requests tới Glowroot API |
+| `oracledb` | 3.4.1 | Kết nối Oracle Database |
+| `sqlglot` | 28.6.0 | SQL Parser |
+| `Jinja2` | 3.1.6 | Template engine cho báo cáo HTML |
+| `pydantic` | 2.12.5 | Data validation |
+| `httpx` | 0.28.1 | HTTP client async |
+| `python-dotenv` | 1.2.1 | Load biến môi trường từ .env |
+
+> 📋 Xem đầy đủ dependencies trong file `requirements.txt`
 
 ### Dịch vụ bên ngoài
 
@@ -126,7 +131,7 @@ source venv/bin/activate  # Linux/macOS
 ### 3. Cài đặt dependencies
 
 ```bash
-pip install pyyaml requests oracledb sqlglot jinja2
+pip install -r requirements.txt
 ```
 
 ### 4. Cấu hình biến môi trường
