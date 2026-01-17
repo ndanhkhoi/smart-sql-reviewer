@@ -136,7 +136,7 @@ review:
   review_dir: "review"
 
   # Retry configuration
-  max_retries: 10  # Maximum number of retry attempts
+  max_retries: 15  # Maximum number of retry attempts
   initial_retry_delay: 2  # Initial retry delay in seconds
   max_retry_delay: 10  # Maximum retry delay in seconds
 

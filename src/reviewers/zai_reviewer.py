@@ -133,6 +133,11 @@ class ZAiSQLReviewer:
             "total_retries": 0,
             "total_tokens_used": 0,
             "total_review_time": 0.0,
+            # Token usage details
+            "prompt_tokens": 0,           # Input tokens
+            "completion_tokens": 0,       # Output tokens
+            "reasoning_tokens": 0,        # Reasoning tokens
+            "cached_tokens": 0,           # Cached tokens
         }
         self.stats_lock = threading.Lock()
 
@@ -290,12 +295,24 @@ class ZAiSQLReviewer:
                 completion_tokens = usage.get("completion_tokens", 0)
                 total_tokens = usage.get("total_tokens", 0)
 
+                # Extract detailed token usage
+                prompt_details = usage.get("prompt_tokens_details", {})
+                cached_tokens = prompt_details.get("cached_tokens", 0)
+
+                completion_details = usage.get("completion_tokens_details", {})
+                reasoning_tokens = completion_details.get("reasoning_tokens", 0)
+
                 with self.stats_lock:
                     self.stats["total_tokens_used"] += total_tokens
+                    self.stats["prompt_tokens"] += prompt_tokens
+                    self.stats["completion_tokens"] += completion_tokens
+                    self.stats["reasoning_tokens"] += reasoning_tokens
+                    self.stats["cached_tokens"] += cached_tokens
 
                 self.logger.debug(
                     f"API call succeeded for {filename}: "
-                    f"{prompt_tokens} prompt + {completion_tokens} completion = {total_tokens} total tokens"
+                    f"{prompt_tokens} prompt + {completion_tokens} completion = {total_tokens} total tokens "
+                    f"(reasoning: {reasoning_tokens}, cached: {cached_tokens})"
                 )
 
                 return result
@@ -744,8 +761,29 @@ class ZAiSQLReviewer:
         self.logger.info(f"Total retries: {format_number(self.stats['total_retries'])}")
         self.logger.info(f"Total tokens used: {format_number(self.stats['total_tokens_used'])}")
 
+        # Token usage details
+        self.logger.info("")
+        self.logger.info("Token Usage Details:")
+        self.logger.info(f"  Input tokens (prompt):    {format_number(self.stats['prompt_tokens'])}")
+        self.logger.info(f"  Output tokens (completion): {format_number(self.stats['completion_tokens'])}")
+        self.logger.info(f"  Reasoning tokens:         {format_number(self.stats['reasoning_tokens'])}")
+        self.logger.info(f"  Cached tokens:            {format_number(self.stats['cached_tokens'])}")
+
+        # Calculate effective tokens (actual new tokens processed)
+        effective_tokens = (
+            self.stats['prompt_tokens'] - self.stats['cached_tokens'] +
+            self.stats['completion_tokens']
+        )
+        self.logger.info(f"  Effective (new) tokens:   {format_number(effective_tokens)}")
+
+        # Cache hit rate
+        if self.stats['prompt_tokens'] > 0:
+            cache_hit_rate = (self.stats['cached_tokens'] / self.stats['prompt_tokens']) * 100
+            self.logger.info(f"  Cache hit rate:           {cache_hit_rate:.1f}%")
+
         # Format and display total review time
         total_time = self.stats['total_review_time']
+        self.logger.info("")
         if total_time >= 60:
             minutes = int(total_time // 60)
             seconds = total_time % 60
