@@ -1,0 +1,255 @@
+{
+  "description": "Metadata JSON structure for Oracle schemas HIS_DATA_DANQUY and HIS_COMMON",
+  "type": "object",
+  "properties": {
+    "HIS_DATA_DANQUY": {
+      "$ref": "#/definitions/schemaMetadata"
+    },
+    "HIS_COMMON": {
+      "$ref": "#/definitions/schemaMetadata"
+    }
+  },
+  "additionalProperties": {
+    "$ref": "#/definitions/schemaMetadata"
+  },
+  "definitions": {
+    "schemaMetadata": {
+      "type": "object",
+      "properties": {
+        "tables": {
+          "type": "array",
+          "description": "List of tables in the schema",
+          "items": {
+            "$ref": "#/definitions/tableMetadata"
+          }
+        },
+        "views": {
+          "type": "array",
+          "description": "List of views in the schema",
+          "items": {
+            "$ref": "#/definitions/viewMetadata"
+          }
+        },
+        "statistics": {
+          "$ref": "#/definitions/schemaStatistics"
+        }
+      },
+      "required": ["tables", "views", "statistics"]
+    },
+    "tableMetadata": {
+      "type": "object",
+      "description": "Metadata of a single table",
+      "properties": {
+        "tableName": {
+          "type": "string",
+          "description": "Oracle table name"
+        },
+        "tablespace": {
+          "type": "string",
+          "description": "Tablespace where the table is stored"
+        },
+        "numRows": {
+          "type": ["integer", "null"],
+          "description": "Estimated number of rows from Oracle statistics"
+        },
+        "avgRowLength": {
+          "type": ["integer", "null"],
+          "description": "Average row length in bytes"
+        },
+        "lastAnalyzed": {
+          "type": ["string", "null"],
+          "format": "date-time",
+          "description": "Last analyze date for Oracle statistics"
+        },
+        "isTemporary": {
+          "type": ["string", "null"],
+          "description": "Y/N flag indicating if the table is temporary"
+        },
+        "isPartitioned": {
+          "type": ["string", "null"],
+          "description": "YES/NO flag indicating if the table is partitioned"
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/columnMetadata"
+          },
+          "description": "List of columns for this table"
+        },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/constraintMetadata"
+          },
+          "description": "List of constraints defined on this table"
+        },
+        "indexes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/indexMetadata"
+          },
+          "description": "List of indexes defined on this table"
+        }
+      },
+      "required": ["tableName", "columns"]
+    },
+    "columnMetadata": {
+      "type": "object",
+      "description": "Metadata of a single column",
+      "properties": {
+        "columnName": {
+          "type": "string",
+          "description": "Column name"
+        },
+        "dataType": {
+          "type": "string",
+          "description": "Oracle data type (e.g. VARCHAR2, NUMBER, DATE)"
+        },
+        "dataLength": {
+          "type": ["integer", "null"],
+          "description": "Column length in bytes or characters"
+        },
+        "dataPrecision": {
+          "type": ["integer", "null"],
+          "description": "Precision for NUMBER columns"
+        },
+        "dataScale": {
+          "type": ["integer", "null"],
+          "description": "Scale for NUMBER columns"
+        },
+        "nullable": {
+          "type": "string",
+          "description": "Y/N flag indicating whether the column allows NULL"
+        },
+        "columnId": {
+          "type": "integer",
+          "description": "1-based column position in the table"
+        },
+        "defaultValue": {
+          "type": ["string", "null"],
+          "description": "Database-level default expression for the column"
+        }
+      },
+      "required": ["columnName", "dataType"]
+    },
+    "constraintMetadata": {
+      "type": "object",
+      "description": "Metadata of a single constraint",
+      "properties": {
+        "constraintName": {
+          "type": "string",
+          "description": "Constraint name"
+        },
+        "constraintType": {
+          "type": "string",
+          "description": "Constraint type: P (PK), R (FK), U (UNIQUE), C (CHECK), etc."
+        },
+        "status": {
+          "type": ["string", "null"],
+          "description": "Constraint status (ENABLED/DISABLED)"
+        },
+        "validated": {
+          "type": ["string", "null"],
+          "description": "Validation status (VALIDATED/NOT VALIDATED)"
+        },
+        "referencedConstraint": {
+          "type": ["string", "null"],
+          "description": "Referenced constraint name for foreign keys"
+        },
+        "deleteRule": {
+          "type": ["string", "null"],
+          "description": "Delete rule for foreign keys (CASCADE/SET NULL/NO ACTION)"
+        },
+        "columns": {
+          "type": ["string", "null"],
+          "description": "Comma-separated list of column names in the constraint"
+        },
+        "searchCondition": {
+          "type": ["string", "null"],
+          "description": "Check expression for CHECK constraints, when available"
+        }
+      },
+      "required": ["constraintName", "constraintType"]
+    },
+    "indexMetadata": {
+      "type": "object",
+      "description": "Metadata of a single index",
+      "properties": {
+        "indexName": {
+          "type": "string",
+          "description": "Index name"
+        },
+        "indexType": {
+          "type": ["string", "null"],
+          "description": "Index type (NORMAL, BITMAP, FUNCTION-BASED, etc.)"
+        },
+        "uniqueness": {
+          "type": ["string", "null"],
+          "description": "UNIQUE or NONUNIQUE"
+        },
+        "tablespace": {
+          "type": ["string", "null"],
+          "description": "Tablespace where the index is stored"
+        },
+        "status": {
+          "type": ["string", "null"],
+          "description": "Index status (VALID/UNUSABLE)"
+        },
+        "columns": {
+          "type": ["string", "null"],
+          "description": "Comma-separated list of indexed columns in order"
+        }
+      },
+      "required": ["indexName"]
+    },
+    "viewMetadata": {
+      "type": "object",
+      "description": "Metadata of a single view",
+      "properties": {
+        "viewName": {
+          "type": "string",
+          "description": "View name"
+        },
+        "textLength": {
+          "type": ["integer", "null"],
+          "description": "Length of the view definition text"
+        },
+        "viewDefinition": {
+          "type": ["string", "null"],
+          "description": "SQL text defining the view"
+        },
+        "columns": {
+          "type": "array",
+          "description": "Columns exposed by the view",
+          "items": {
+            "$ref": "#/definitions/columnMetadata"
+          }
+        }
+      },
+      "required": ["viewName"]
+    },
+    "schemaStatistics": {
+      "type": "object",
+      "description": "Aggregate statistics of the schema",
+      "properties": {
+        "totalTables": {
+          "type": "integer",
+          "description": "Total number of tables in the schema"
+        },
+        "totalViews": {
+          "type": "integer",
+          "description": "Total number of views in the schema"
+        },
+        "totalSequences": {
+          "type": "integer",
+          "description": "Total number of sequences in the schema"
+        },
+        "totalProcedures": {
+          "type": "integer",
+          "description": "Total number of procedures and functions in the schema"
+        }
+      },
+      "required": ["totalTables", "totalViews", "totalSequences", "totalProcedures"]
+    }
+  }
+}

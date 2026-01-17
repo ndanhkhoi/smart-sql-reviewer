@@ -1,0 +1,145 @@
+# SQL Reviewer Configuration
+# This is the main configuration file for the SQL Reviewer tool
+
+# Glowroot Configuration
+glowroot:
+  # Base URL for Glowroot API (set via GLOWROOT_BASE_URL environment variable)
+  # base_url: ""  # Leave empty, use GLOWROOT_BASE_URL env var
+
+  # Number of hours ago to fetch queries from
+  hours_ago: 48
+
+  # Parallel processing settings
+  parallel:
+    enabled: true
+    max_workers: 10  # Number of parallel full text fetches
+
+  # Transaction discovery settings
+  transaction_discovery:
+    # Initial limit for transaction summaries API
+    initial_limit: 200
+    # Increment when moreAvailable is true
+    limit_increment: 200
+    # Maximum limit to prevent infinite loops
+    max_limit: 5000
+
+  # List of agents to monitor (transactions will be auto-discovered)
+  agents:
+    # ============================================================
+    # PRODUCT SERVICES
+    # ============================================================
+    - agent_id: "cto-authen-service"
+    - agent_id: "cto-billing-service"
+    - agent_id: "cto-common-service"
+    - agent_id: "cto-config-service"
+    - agent_id: "cto-integrate-service"
+    - agent_id: "cto-pharmacy-service"
+    - agent_id: "cto-report-service"
+    - agent_id: "cto-signing-service"
+# Output Configuration
+# Centralized output directory configuration for all phases
+output:
+  # Base directory for all outputs (relative to project root)
+  base_dir: "outputs"
+
+  # SQL files fetched from Glowroot (relative to base_dir)
+  sql_dir: "fetchers/sql"
+
+  # SQL query info/metadata from Glowroot (relative to base_dir)
+  sql_info_dir: "fetchers/sql_info"
+
+  # Parsed SQL output (relative to base_dir)
+  parse_dir: "parse"
+
+  # Oracle metadata output (relative to base_dir)
+  metadata_dir: "metadata"
+
+  # Z.ai API review output (relative to base_dir)
+  review_dir: "review"
+
+  # Log files directory (relative to project root, not base_dir)
+  logs_dir: "logs"
+
+# SQL Parser Configuration
+parser:
+  # SQL dialect for parsing (oracle, mysql, postgres, etc.)
+  dialect: "oracle"
+
+  # File pattern to match SQL files
+  file_pattern: "*.sql"
+
+  # Output format
+  output_format: "json"  # json, csv
+
+  # Parallel processing settings
+  parallel:
+    enabled: true
+    max_workers: 10  # Number of parallel parses
+
+# Logging Configuration
+logging:
+  level: "DEBUG"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  console_output: true
+  file_output: true
+
+# Oracle Database Configuration
+oracle:
+  # Database connection settings (set via environment variables):
+  # - ORACLE_HOST
+  # - ORACLE_PORT
+  # - ORACLE_SERVICE_NAME or ORACLE_SID
+  # - ORACLE_USER
+  # - ORACLE_PASSWORD
+  # host: ""  # Use ORACLE_HOST env var
+  # port: 1521  # Use ORACLE_PORT env var
+  # service_name: ""  # Use ORACLE_SERVICE_NAME env var
+  # sid: ""  # Alternative to service_name, use ORACLE_SID env var
+
+  # Authentication (set via environment variables)
+  # user: ""  # Use ORACLE_USER env var
+  # password: ""  # Use ORACLE_PASSWORD env var
+
+  # Connection pool settings
+  pool:
+    min: 10
+    max: 20
+    increment: 5
+
+  # Metadata extraction settings
+  metadata:
+    # Default schema to use when table has no explicit schema
+    default_schema: "his_data_danquy"
+
+    # Case insensitive comparison (Oracle stores metadata in uppercase)
+    case_insensitive: true
+
+    # Parallel query settings
+    parallel:
+      enabled: true
+      max_workers: 10  # Number of parallel queries
+
+# Z.ai API Reviewer Configuration
+review:
+  # API URL (set via ZAI_API_URL environment variable)
+  # api_url: ""  # Leave empty, use ZAI_API_URL env var
+
+  # API Key (set via ZAI_API_KEY environment variable)
+  # api_key: ""  # Leave empty, use ZAI_API_KEY env var
+
+  # Model to use for API requests
+  model: "glm-4.6"
+
+  # System prompt file path (relative to project root or absolute)
+  # system_prompt_file: "resources/review_prompt.txt"
+
+  # Review output directory (relative to output.base_dir)
+  review_dir: "review"
+
+  # Retry configuration
+  max_retries: 10  # Maximum number of retry attempts
+  initial_retry_delay: 2  # Initial retry delay in seconds
+  max_retry_delay: 10  # Maximum retry delay in seconds
+
+  # Parallel processing settings
+  max_workers: 3  # Number of parallel API calls
+

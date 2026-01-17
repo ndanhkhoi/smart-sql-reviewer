@@ -1,0 +1,94 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Project specific
+# Keep directory structure with .gitkeep but ignore content
+outputs/*
+!outputs/.gitkeep
+!outputs/*/.gitkeep
+outputs/fetchers/*
+!outputs/fetchers/.gitkeep
+!outputs/fetchers/*/.gitkeep
+outputs/metadata/*
+!outputs/metadata/.gitkeep
+outputs/parse/*
+!outputs/parse/.gitkeep
+outputs/review/*
+!outputs/review/.gitkeep
+
+logs/*
+!logs/.gitkeep
+
+config/local*.yaml
+*.log
+*.html
+.env
+.env.local
+.mcp/
+
+# Shared tools
+.shared/
+.github
