@@ -86,3 +86,4 @@ uvicorn==0.40.0
 websockets==16.0
 wrapt==1.17.3
 zipp==3.23.0
+openpyxl==3.1.5
