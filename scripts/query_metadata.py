@@ -12,33 +12,9 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-import yaml
 from src.metadata.oracle_metadata_fetcher import OracleMetadataFetcher
 from src.utils.logger import setup_logger, create_log_file_path
-
-
-def load_env_vars(env_file: Path = None):
-    """Load environment variables from .env file."""
-    if env_file is None:
-        env_file = project_root / ".env"
-
-    if not env_file.exists():
-        return
-
-    with open(env_file, 'r', encoding='utf-8') as f:
-        for line in f:
-            line = line.strip()
-            if not line or line.startswith('#'):
-                continue
-            if '=' in line:
-                key, value = line.split('=', 1)
-                os.environ[key.strip()] = value.strip()
-
-
-def load_config(config_file: Path) -> dict:
-    """Load configuration from YAML file."""
-    with open(config_file, 'r', encoding='utf-8') as f:
-        return yaml.safe_load(f)
+from src.utils.config_utils import load_env_vars, load_config
 
 
 def main():
@@ -46,8 +22,7 @@ def main():
     load_env_vars()
 
     # Load config
-    config_file = project_root / "config" / "config.yaml"
-    config = load_config(config_file)
+    config = load_config()
 
     # Setup logger with dynamic file naming
     logs_dir_name = config.get('output', {}).get('logs_dir', 'logs')

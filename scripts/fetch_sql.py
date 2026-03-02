@@ -15,56 +15,9 @@ from pathlib import Path
 # Add src directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-import yaml
 from src.fetchers import GlowrootSQLFetcher
 from src.utils import print_section
-
-
-def load_env_vars(env_file: Path = None):
-    """
-    Load environment variables from .env file.
-
-    Args:
-        env_file: Path to .env file (default: project_root/.env)
-    """
-    if env_file is None:
-        env_file = Path(__file__).parent.parent / ".env"
-
-    if not env_file.exists():
-        return
-
-    with open(env_file, 'r', encoding='utf-8') as f:
-        for line in f:
-            line = line.strip()
-            # Skip comments and empty lines
-            if not line or line.startswith('#'):
-                continue
-            # Parse KEY=VALUE
-            if '=' in line:
-                key, value = line.split('=', 1)
-                os.environ[key.strip()] = value.strip()
-
-
-def load_config(config_file: str) -> dict:
-    """
-    Load configuration from YAML file.
-
-    Args:
-        config_file: Path to configuration file
-
-    Returns:
-        Configuration dictionary
-    """
-    try:
-        with open(config_file, "r", encoding="utf-8") as f:
-            config = yaml.safe_load(f)
-        return config
-    except FileNotFoundError:
-        print(f"Error: Configuration file '{config_file}' not found!")
-        sys.exit(1)
-    except yaml.YAMLError as e:
-        print(f"Error parsing YAML configuration: {e}")
-        sys.exit(1)
+from src.utils.config_utils import load_env_vars, load_config
 
 
 def list_agents(config: dict):
@@ -204,7 +157,7 @@ Note: Transactions are automatically discovered from Glowroot API.
     load_env_vars()
 
     # Load configuration
-    config = load_config(args.config)
+    config = load_config(Path(args.config))
 
     # Override hours_ago if specified
     if args.hours:

@@ -14,13 +14,7 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-
-def load_config():
-    """Load configuration to get output directories."""
-    import yaml
-    config_file = project_root / "config" / "config.yaml"
-    with open(config_file, 'r', encoding='utf-8') as f:
-        return yaml.safe_load(f)
+from src.utils.config_utils import load_config
 
 
 def clean_outputs(config, dry_run=False):
