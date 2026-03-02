@@ -400,11 +400,8 @@ Phân tích độ phức tạp SQL bằng cách gọi stored procedure `sp_analy
 #### Ví dụ
 
 ```bash
-# Phân tích query có >10 cột HOẶC >3 bảng
-python scripts/analyze_sql_complexity.py --min-cols 10 --min-tables 3
-
-# Phân tích query cực kỳ phức tạp (>20 cột HOẶC >5 bảng)
-python scripts/analyze_sql_complexity.py --min-cols 20 --min-tables 5
+# Phân tích query có >100 cột HOẶC >10 bảng
+python scripts/analyze_sql_complexity.py --min-cols 100 --min-tables 10
 
 # Custom output file
 python scripts/analyze_sql_complexity.py --min-cols 10 --min-tables 3 \
