@@ -67,6 +67,7 @@ Thumbs.db
 # Project specific
 # Keep directory structure with .gitkeep but ignore content
 outputs/*
+outputs_*/
 !outputs/.gitkeep
 !outputs/*/.gitkeep
 outputs/fetchers/*
