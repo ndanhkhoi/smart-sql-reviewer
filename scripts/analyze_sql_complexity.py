@@ -310,9 +310,10 @@ def export_jira_csv(
 
 * Số câu cần tối ưu: {query_count}
 * Check các SQL của API {transaction}
-* Chi tiết ở sheet: {agent} 
+* Chi tiết ở sheet: {agent}. Link: {google_docs_url}
+* Kiểm tra chỉ truy vấn select những bảng và cột thật sự cần thiết để tối ưu hiệu năng. Nếu nghiệp vụ yêu cầu bắt buộc phải select đủ thì cancel task và comment ghi rõ lý do.
 
-{google_docs_url}'''
+'''
 
             # Write row
             writer.writerow([
