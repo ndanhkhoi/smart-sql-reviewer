@@ -310,6 +310,7 @@ def export_jira_csv(
 
 * Số câu cần tối ưu: {query_count}
 * Check các SQL của API {transaction}
+* Chi tiết ở sheet: {agent} 
 
 {google_docs_url}'''
 
