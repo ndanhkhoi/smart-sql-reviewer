@@ -254,7 +254,7 @@ def export_jira_csv(
     """
     Export Jira subtask CSV file.
 
-    CSV format: parent,labels,summary,description,assignee,reporter,duedate,estimate
+    CSV format: parent,labels,tên task,mô tả,assignee,reporter,duedate YYYY-MM-DD,estimate (hour)
 
     Args:
         logger: Logger instance
@@ -285,12 +285,12 @@ def export_jira_csv(
         writer.writerow([
             'parent',
             'labels',
-            'summary',
-            'description',
+            'tên task',
+            'mô tả',
             'assignee',
             'reporter',
-            'duedate',
-            'estimate'
+            'duedate YYYY-MM-DD',
+            'estimate (hour)'
         ])
 
         # Write rows

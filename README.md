@@ -419,7 +419,7 @@ python scripts/analyze_sql_complexity.py --min-cols 10 --min-tables 3 \
 
 3. **Jira CSV**: `outputs/complexity/jira_subtasks.csv`
    - Format để import subtask vào Jira
-   - Columns: `parent,labels,summary,description,assignee,reporter,duedate,estimate`
+   - Columns: `parent,labels,tên task,mô tả,assignee,reporter,duedate YYYY-MM-DD,estimate (hour)`
    - Assignee: `khoinda`, Reporter: `nganntk.tgg`
    - Labels: `TOI_UU_SQL,{agent_name}` (bỏ prefix `cto-`)
 
